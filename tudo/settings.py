@@ -13,6 +13,8 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 
 ALLOWED_HOSTS = [
     ".onrender.com",
+    "localhost",
+    "127.0.0.1",
 ]
 
 # Application definition
@@ -105,10 +107,8 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
-STORAGES = {
-    "staticfiles": {
-        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
-    },
-}
+STATICFILES_STORAGE = (
+    "whitenoise.storage.CompressedManifestStaticFilesStorage"
+)
 
 STATIC_ROOT = BASE_DIR / "staticfiles"
