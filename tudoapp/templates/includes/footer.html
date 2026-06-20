@@ -1,0 +1,62 @@
+<footer class="border-t border-white/10 bg-slate-900/60 backdrop-blur-xl mt-16">
+  <div class="max-w-7xl mx-auto px-6 py-12">
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+
+      <!-- Brand Section -->
+      <div>
+        <h2 class="text-white text-xl font-bold">TaskFlow</h2>
+        <p class="text-slate-400 text-sm mt-3 leading-relaxed">
+          A modern productivity tool designed to help you organize tasks,
+          track progress, and boost your daily efficiency with a clean workflow.
+        </p>
+      </div>
+
+      <!-- Quick Links -->
+      <div>
+        <h3 class="text-white font-semibold mb-4">Quick Links</h3>
+
+        <ul class="space-y-2 text-slate-400 text-sm">
+          <li>
+            <a href="{% url 'task_list' %}" class="hover:text-white transition">
+              Dashboard
+            </a>
+          </li>
+          <li>
+            <a href="{% url 'task_add' %}" class="hover:text-white transition">
+              Create Task
+            </a>
+          </li>
+           
+        </ul>
+      </div>
+
+      <!-- Developer Info -->
+      <div>
+        <h3 class="text-white font-semibold mb-4">Developer</h3>
+
+        <p class="text-slate-400 text-sm leading-relaxed">
+          Built with ❤️ using Django & Tailwind CSS.
+          Focused on clean architecture, authentication, and multi-user task management.
+        </p>
+
+        <div class="mt-4 text-sm text-slate-500">
+          📧 pintujhala4@gmail.com
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Bottom Bar -->
+    <div class="mt-10 pt-6 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4">
+
+      <p class="text-slate-500 text-sm">
+        © {% now "Y" %} TaskFlow. All rights reserved.
+      </p>
+
+       
+
+    </div>
+
+  </div>
+</footer>

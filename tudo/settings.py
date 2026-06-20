@@ -9,7 +9,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
  
 # DEBUG = os.environ.get("DEBUG", "False") == "True"
 DEBUG=True
-SECRET_KEY = os.environ.get("SECRET_KEY")
+# cloud secret key
+# SECRET_KEY = os.environ.get("SECRET_KEY")
+SECRET_KEY = 'django-insecure-pintu-taskflow-secret-key-123'
 
 ALLOWED_HOSTS = [
     ".onrender.com",
@@ -63,10 +65,20 @@ WSGI_APPLICATION = 'tudo.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
+# cloud db setup
+# DATABASES = {
+#     "default": dj_database_url.parse(
+#         os.environ.get("DATABASE_URL")
+#     )
+# }
+
+
+# testing db 
 DATABASES = {
-    "default": dj_database_url.parse(
-        os.environ.get("DATABASE_URL")
-    )
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
 }
 
 # Password validation
@@ -112,3 +124,4 @@ STATICFILES_STORAGE = (
 )
 
 STATIC_ROOT = BASE_DIR / "staticfiles"
+LOGIN_URL = 'login_view'

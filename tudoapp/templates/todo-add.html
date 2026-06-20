@@ -1,110 +1,99 @@
-{% extends "base.html" %}
-
-{% block content %}
+{% extends "base.html" %} {% block content %}
 
 <div class="max-w-4xl mx-auto">
-
-    <!-- Header -->
-    <div class="mb-10">
-
-        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-violet-500/10 border border-violet-500/20 text-violet-400 text-sm font-medium mb-4">
-            ✨ Task Management
-        </div>
-
-        <h1 class="text-5xl font-black text-white tracking-tight">
-            {% if task %}
-                Update Task
-            {% else %}
-                Create New Task
-            {% endif %}
-        </h1>
-
-        <p class="text-slate-400 mt-3 text-lg">
-            Organize your workflow with clarity and precision.
-        </p>
-
+  <!-- Header -->
+  <div class="mb-10">
+    <div
+      class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-violet-500/10 border border-violet-500/20 text-violet-400 text-sm font-medium mb-4"
+    >
+      ✨ Task Management
+    </div>
+    <div
+      class="inline-flex md:hidden items-center gap-2 px-4 py-2 rounded-full bg-indigo-600/50 border border-violet-700/40 text-violet-200 text-sm font-medium mb-4"
+    >
+      <a href="{% url 'task_list' %}">  Go back Dashboard </a>
     </div>
 
-    <!-- Form Card -->
-    <div class="relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl shadow-2xl">
+    <h1 class="text-5xl font-black text-white tracking-tight">
+      {% if task %} Update Task {% else %} Create New Task {% endif %}
+    </h1>
 
-        <!-- Glow Effect -->
-        <div class="absolute -top-24 -right-24 h-64 w-64 bg-violet-600/20 blur-3xl rounded-full"></div>
+    <p class="text-slate-400 mt-3 text-lg">
+      Organize your workflow with clarity and precision.
+    </p>
+  </div>
 
-        <div class="relative p-8 md:p-10">
+  <!-- Form Card -->
+  <div
+    class="relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl shadow-2xl"
+  >
+    <!-- Glow Effect -->
+    <div
+      class="absolute -top-24 -right-24 h-64 w-64 bg-violet-600/20 blur-3xl rounded-full"
+    ></div>
 
-            {% if error %}
-            <div class="mb-6 p-4 rounded-2xl bg-red-500/10 border border-red-500/20 text-red-400">
-                {{ error }}
-            </div>
-            {% endif %}
+    <div class="relative p-8 md:p-10">
+      {% if error %}
+      <div
+        class="mb-6 p-4 rounded-2xl bg-red-500/10 border border-red-500/20 text-red-400"
+      >
+        {{ error }}
+      </div>
+      {% endif %}
 
-            <form method="POST" class="space-y-8">
+      <form method="POST" class="space-y-8">
+        {% csrf_token %}
 
-                {% csrf_token %}
+        <!-- Title -->
+        <div>
+          <label class="block mb-3 text-slate-300 font-medium">
+            Task Title
+          </label>
 
-                <!-- Title -->
-                <div>
-
-                    <label class="block mb-3 text-slate-300 font-medium">
-                        Task Title
-                    </label>
-
-                    <input
-                        type="text"
-                        name="title"
-                        value="{{ task.title|default:'' }}"
-                        placeholder="Enter task title..."
-                        class="w-full bg-slate-900/50 border border-white/10 rounded-2xl px-5 py-4 text-white placeholder:text-slate-500 outline-none focus:border-violet-500 focus:ring-2 focus:ring-violet-500/20 transition"
-                    />
-
-                </div>
-
-                <!-- Description -->
-                <div>
-
-                    <label class="block mb-3 text-slate-300 font-medium">
-                        Description
-                    </label>
-
-                    <textarea
-                        name="description"
-                        rows="6"
-                        placeholder="Write task details..."
-                        class="w-full resize-none bg-slate-900/50 border border-white/10 rounded-2xl px-5 py-4 text-white placeholder:text-slate-500 outline-none focus:border-violet-500 focus:ring-2 focus:ring-violet-500/20 transition"
-                    >{{ task.description|default:'' }}</textarea>
-
-                </div>
-
-                <!-- Actions -->
-                <div class="flex flex-col sm:flex-row gap-4 pt-4">
-
-                    <button
-                        type="submit"
-                        class="flex-1 py-4 rounded-2xl bg-gradient-to-r from-violet-600 to-indigo-600 text-white font-semibold shadow-lg shadow-violet-600/20 hover:scale-[1.02] transition duration-300"
-                    >
-                        {% if task %}
-                            🚀 Update Task
-                        {% else %}
-                            ✨ Create Task
-                        {% endif %}
-                    </button>
-
-                    <a
-                        href="{% url 'task_list' %}"
-                        class="flex-1 py-4 rounded-2xl border border-white/10 bg-white/5 text-white text-center font-medium hover:bg-white/10 transition"
-                    >
-                        Cancel
-                    </a>
-
-                </div>
-
-            </form>
-
+          <input
+            type="text"
+            name="title"
+            value="{{ task.title|default:'' }}"
+            placeholder="Enter task title..."
+            class="w-full bg-slate-900/50 border border-white/10 rounded-2xl px-5 py-4 text-white placeholder:text-slate-500 outline-none focus:border-violet-500 focus:ring-2 focus:ring-violet-500/20 transition"
+          />
         </div>
 
-    </div>
+        <!-- Description -->
+        <div>
+          <label class="block mb-3 text-slate-300 font-medium">
+            Description
+          </label>
 
+          <textarea
+            name="description"
+            rows="6"
+            placeholder="Write task details..."
+            class="w-full resize-none bg-slate-900/50 border border-white/10 rounded-2xl px-5 py-4 text-white placeholder:text-slate-500 outline-none focus:border-violet-500 focus:ring-2 focus:ring-violet-500/20 transition"
+          >
+{{ task.description|default:'' }}</textarea
+          >
+        </div>
+
+        <!-- Actions -->
+        <div class="flex flex-col sm:flex-row gap-4 pt-4">
+          <button
+            type="submit"
+            class="flex-1 py-4 rounded-2xl bg-gradient-to-r from-violet-600 to-indigo-600 text-white font-semibold shadow-lg shadow-violet-600/20 hover:scale-[1.02] transition duration-300"
+          >
+            {% if task %} 🚀 Update Task {% else %} ✨ Create Task {% endif %}
+          </button>
+
+          <a
+            href="{% url 'task_list' %}"
+            class="flex-1 py-4 rounded-2xl border border-white/10 bg-white/5 text-white text-center font-medium hover:bg-white/10 transition"
+          >
+            Cancel
+          </a>
+        </div>
+      </form>
+    </div>
+  </div>
 </div>
 
 {% endblock %}
