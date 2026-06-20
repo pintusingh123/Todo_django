@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="min-h-screen flex items-center justify-center px-4">
+<div class="min-h-auto flex items-center justify-center px-4">
 
   <div class="w-full max-w-md bg-white/5 border border-white/10 backdrop-blur-xl rounded-2xl shadow-xl p-8">
 
@@ -27,7 +27,8 @@
     {% endif %}
 
     <!-- Form -->
-    <form method="POST" class="space-y-5">
+    <form method="POST"
+    autocomplete="off"      class="space-y-5">
       {% csrf_token %}
 
       <!-- Username -->

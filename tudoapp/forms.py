@@ -5,7 +5,6 @@ import re
 from django.core.exceptions import ValidationError
 
 
-
 class Registration(UserCreationForm):
     email = forms.EmailField(required=True)
 
@@ -57,7 +56,8 @@ class Registration(UserCreationForm):
 
         # only letters, numbers, underscore allowed
         if not re.match(r"^[a-zA-Z0-9_]+$", username):
-            raise ValidationError("Username can only contain letters, numbers, underscore.")
+            raise ValidationError(
+                "Username can only contain letters, numbers, underscore.")
 
         # duplicate check
         if User.objects.filter(username=username).exists():
@@ -85,11 +85,11 @@ class LoginForm(forms.Form):
         self.fields["username"].widget.attrs.update({
             "class": style.strip(),
             "placeholder": "Enter Yur username",
-            "autocomplete":"off"
+            "autocomplete": "off"
         })
 
         self.fields["password"].widget.attrs.update({
             "class": style.strip(),
             "placeholder": "Enter Your password",
-            "autocomplete": "current-password"
+            "autocomplete": "off"
         })
