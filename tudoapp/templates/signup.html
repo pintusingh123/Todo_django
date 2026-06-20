@@ -1,21 +1,18 @@
-{% extends "base.html" %}
-
-{% block content %}
-<div class="min-h-screen flex items-center justify-center   px-4">
+{% extends "base.html" %} {% block content %}
+<div class="min-h-screen flex items-center justify-center px-4">
   <div class="w-full max-w-md shadow-slate-800 rounded-2xl shadow-xl p-8">
-
     <div class="text-center mb-8">
-      <h1 class="text-3xl font-bold text-slate-100">
-        Create Account 
-      </h1>
-      <p class="text-slate-200 mt-2">
-        Start managing your tasks with TaskFlow
-      </p>
+      <h1 class="text-3xl font-bold text-slate-100">Create Account</h1>
+      <p class="text-slate-200 mt-2">Start managing your tasks with TaskFlow</p>
     </div>
 
     {% if form.errors %}
-    <div class="bg-red-50 border border-red-200 text-red-600 p-3 rounded-xl mb-4 text-sm">
-      Please fix the errors below.
+    <div
+      class="mb-4 px-4 py-3 rounded-xl border border-red-700/90 bg-red-500/10 text-red-500 text-sm"
+    >
+      {% for field in form %} {% for error in field.errors %}
+      <p>{{ error }}</p>
+      {% endfor %} {% endfor %}
     </div>
     {% endif %}
 
@@ -55,8 +52,7 @@
 
       <button
         type="submit"
-        class="w-full bg-gray-100
-         hover:bg-indigo-700 text-black font-semibold py-3 rounded-xl transition duration-300"
+        class="w-full bg-gray-100 hover:bg-indigo-700 text-black font-semibold py-3 rounded-xl transition duration-300"
       >
         Sign Up
       </button>
@@ -73,7 +69,6 @@
         </a>
       </p>
     </div>
-
   </div>
 </div>
 {% endblock %}

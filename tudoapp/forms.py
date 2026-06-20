@@ -1,6 +1,9 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
+import re
+from django.core.exceptions import ValidationError
+
 
 
 class Registration(UserCreationForm):
@@ -12,36 +15,56 @@ class Registration(UserCreationForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        style = "w-full px-4 py-3 border text-white  border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+
+        style = "w-full px-4 py-3 border text-white border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
 
         self.fields["username"].widget.attrs.update({
             "class": style,
             "placeholder": "Enter Your username"
         })
+
         self.fields["email"].widget.attrs.update({
             "class": style,
             "placeholder": "Enter Your Email"
         })
 
         self.fields["password1"].widget.attrs.update({
-             "class": style,
+            "class": style,
             "placeholder": "Enter New password"
         })
 
         self.fields["password2"].widget.attrs.update({
             "class": style,
-            "placeholder": "Enter Confirm password"
-        })    
+            "placeholder": "Confirm password"
+        })
 
-    def clean_email(self) -> str:
+    # 🔥 EMAIL UNIQUE CHECK
+    def clean_email(self):
         email = self.cleaned_data.get("email")
+
         if User.objects.filter(email=email).exists():
-            raise forms.ValidationError(
-                "Email is already used pls Insert Another email")
+            raise ValidationError("Email already used. Try another email.")
+
         return email
 
+    #  USERNAME VALIDATION (NEW ADDED)
+    def clean_username(self):
+        username = self.cleaned_data.get("username")
 
-from django import forms
+        # length check
+        if len(username) < 3 or len(username) > 15:
+            raise ValidationError("Username must be 3–15 characters long.")
+
+        # only letters, numbers, underscore allowed
+        if not re.match(r"^[a-zA-Z0-9_]+$", username):
+            raise ValidationError("Username can only contain letters, numbers, underscore.")
+
+        # duplicate check
+        if User.objects.filter(username=username).exists():
+            raise ValidationError("Username already taken.")
+
+        return username
+
 
 class LoginForm(forms.Form):
     username = forms.CharField()
@@ -68,5 +91,5 @@ class LoginForm(forms.Form):
         self.fields["password"].widget.attrs.update({
             "class": style.strip(),
             "placeholder": "Enter Your password",
-            "autocomplete": "new-password"
+            "autocomplete": "current-password"
         })
