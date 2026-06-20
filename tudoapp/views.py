@@ -8,7 +8,9 @@ from django.contrib.auth.decorators import login_required
 
 
 def login_view(request):
+
     form = LoginForm()
+
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
@@ -21,8 +23,13 @@ def login_view(request):
         if user is not None:
             login(request, user)
             return redirect("task_list")
+        else:
+            messages.error(request, "Invalid username or password")
 
-    return render(request, "login.html", {"form": form})
+    return render(request, "login.html", {
+        "form": form,
+         
+    })
 
 
 def signup_view(request):
@@ -116,7 +123,7 @@ def task_updated(request, pk):
 
 @login_required
 def task_deleted(request, pk):
-    task = get_object_or_404(Todo, pk=pk,user=request.user)
+    task = get_object_or_404(Todo, pk=pk, user=request.user)
 
     if request.method == 'POST':
         task.delete()
@@ -128,7 +135,7 @@ def task_deleted(request, pk):
 
 
 def task_toggle(request, pk):
-    task = get_object_or_404(Todo, pk=pk,user=request.user)
+    task = get_object_or_404(Todo, pk=pk, user=request.user)
 
     if request.method == "POST":
         task.completed = not task.completed
