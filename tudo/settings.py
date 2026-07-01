@@ -3,16 +3,18 @@
 from pathlib import Path
 import dj_database_url
 import os
+from dotenv import load_dotenv
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # DEBUG = os.environ.get("DEBUG", "False") == "True"
-DEBUG = True
+DEBUG = False
 # cloud secret key
-# SECRET_KEY = os.environ.get("SECRET_KEY")
+SECRET_KEY = os.environ.get("SECRET_KEY")
 
-SECRET_KEY = 'django-insecure-pintu-taskflow-secret-key-123'
+# SECRET_KEY = 'django-insecure-pintu-taskflow-secret-key-123'
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
@@ -24,8 +26,8 @@ LOGIN_URL = 'login_view'
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'login_view'
 
-EMAIL_HOST_USER = 'pintugit982@gmail.com'
-EMAIL_HOST_PASSWORD = 'cvbc gjpr ylxp ylus'
+EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD")
 
 
 ALLOWED_HOSTS = [
@@ -81,20 +83,20 @@ WSGI_APPLICATION = 'tudo.wsgi.application'
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
 # # cloud db setup
-# DATABASES = {
-#     "default": dj_database_url.parse(
-#         os.environ.get("DATABASE_URL")
-#     )
-# }
+DATABASES = {
+    "default": dj_database_url.parse(
+        os.environ.get("DATABASE_URL")
+    )
+}
 
 
 # testing db
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/6.0/ref/settings/#auth-password-validators
