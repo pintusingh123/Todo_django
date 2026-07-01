@@ -4,19 +4,19 @@
 
 <div class="max-w-2xl mx-auto">
 
-    <!-- Delete Card -->
-    <div class="relative overflow-hidden rounded-3xl border border-red-500/20 bg-white/5 backdrop-blur-xl shadow-2xl">
+    <!-- Card -->
+    <div class="relative overflow-hidden rounded-3xl border border-amber-500/20 bg-white/5 backdrop-blur-xl shadow-2xl">
 
         <!-- Background Glow -->
-        <div class="absolute -top-24 -right-24 h-72 w-72 bg-red-600/20 blur-3xl rounded-full"></div>
+        <div class="absolute -top-24 -right-24 h-72 w-72 bg-amber-500/20 blur-3xl rounded-full"></div>
 
         <div class="relative p-8 md:p-10">
 
-            <!-- Warning Icon -->
+            <!-- Icon -->
             <div class="flex justify-center mb-6">
 
-                <div class="h-24 w-24 rounded-full bg-red-500/10 border border-red-500/20 flex items-center justify-center text-5xl">
-                    ⚠️
+                <div class="h-24 w-24 rounded-full bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-5xl">
+                    🗑️
                 </div>
 
             </div>
@@ -24,21 +24,21 @@
             <!-- Heading -->
             <div class="text-center">
 
-                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-red-500/10 border border-red-500/20 text-red-400 text-sm font-medium mb-4">
-                    Dangerous Action
+                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-300 text-sm font-medium mb-4">
+                    Move to Trash
                 </div>
 
                 <h1 class="text-4xl font-black text-white">
-                    Delete Task
+                    Move Task to Trash
                 </h1>
 
                 <p class="text-slate-400 mt-3 text-lg">
-                    This action cannot be undone.
+                    Your task won't be deleted permanently.
                 </p>
 
             </div>
 
-            <!-- Task Info -->
+            <!-- Task Card -->
             <div class="mt-8 p-6 rounded-2xl border border-white/10 bg-slate-900/40">
 
                 <p class="text-slate-400 text-sm uppercase tracking-wider mb-2">
@@ -57,30 +57,46 @@
 
             </div>
 
-            <!-- Confirmation Message -->
+            <!-- Info Box -->
+            <div class="mt-8 rounded-2xl border border-blue-500/20 bg-blue-500/10 p-5">
+
+                <h3 class="text-blue-300 font-semibold mb-3">
+                    What happens next?
+                </h3>
+
+                <ul class="space-y-2 text-slate-300 text-sm">
+
+                    <li>✅ This task will be moved to your Trash.</li>
+
+                    <li>♻️ You can restore it anytime within the next <strong>15 days</strong>.</li>
+
+                    <li>🗑️ After 15 days, the task will be permanently deleted automatically.</li>
+
+                </ul>
+
+            </div>
+
+            <!-- Confirmation -->
             <div class="mt-8 text-center">
 
-                <p class="text-slate-300">
-                    Are you sure you want to permanently remove this task?
-                </p>
-
-                <p class="text-red-400 font-medium mt-2">
-                    Once deleted, it cannot be recovered.
+                <p class="text-slate-300 text-lg">
+                    Do you want to move this task to Trash?
                 </p>
 
             </div>
 
-            <!-- Actions -->
+            <!-- Buttons -->
             <form method="POST" class="mt-10">
+
                 {% csrf_token %}
 
                 <div class="flex flex-col sm:flex-row gap-4">
 
                     <button
                         type="submit"
-                        class="flex-1 py-4 rounded-2xl bg-gradient-to-r from-red-600 to-rose-600 text-white font-semibold shadow-lg shadow-red-600/20 hover:scale-[1.02] transition duration-300"
+                        class="flex-1 py-4 rounded-2xl bg-gradient-to-r from-amber-500 to-orange-500 text-white font-semibold shadow-lg shadow-amber-500/30 hover:scale-[1.02] transition duration-300"
                     >
-                        🗑 Delete Forever
+                        🗑 Move to Trash
                     </button>
 
                     <a

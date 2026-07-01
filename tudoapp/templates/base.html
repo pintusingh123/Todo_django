@@ -1,4 +1,4 @@
- {% load static %}
+{% load static %}
 <!doctype html>
 <html lang="en">
   <head>
@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>TaskFlow</title>
 
-   
     <link rel="stylesheet" href="{% static 'css/output.css' %}" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   </head>
 
   <body class="min-h-screen bg-slate-950">
@@ -102,6 +102,45 @@
       {% block content %} {% endblock %}
     </main>
     <!-- footer -->
-     {% include "includes/footer.html" %}
+    {% include "includes/footer.html" %} 
+    
+
+   {% if messages %}
+
+       <script>
+
+        const Toast = Swal.mixin({
+
+         toast: true,
+         position: 'top-end',
+         showConfirmButton: false,
+         timer: 2000,
+         timerProgressBar: true,
+
+          didOpen: (toast) => {
+
+        toast.onmouseenter = Swal.stopTimer;
+        toast.onmouseleave = Swal.resumeTimer;
+
+    }
+
+});
+
+{% for message in messages %}
+
+Toast.fire({
+
+    icon:
+    "{% if message.tags == 'success' %}success{% elif message.tags == 'error' %}error{% elif message.tags == 'warning' %}warning{% else %}info{% endif %}",
+
+    title: "{{ message|escapejs }}"
+
+});
+
+{% endfor %}
+
+</script>
+
+{% endif %}
   </body>
 </html>

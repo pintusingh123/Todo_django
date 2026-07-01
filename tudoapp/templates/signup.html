@@ -1,4 +1,5 @@
-{% extends "base.html" %} {% block content %}
+{% extends "base.html" %}
+{% block content %}
 <div class="min-h-auto flex items-center justify-center px-4">
   <div class="w-full max-w-md shadow-slate-800 rounded-2xl shadow-xl p-8">
     <div class="text-center mb-8">
@@ -6,15 +7,7 @@
       <p class="text-slate-200 mt-2">Start managing your tasks with TaskFlow</p>
     </div>
 
-    {% if form.errors %}
-    <div
-      class="mb-4 px-4 py-3 rounded-xl border border-red-700/90 bg-red-500/10 text-red-500 text-sm"
-    >
-      {% for field in form %} {% for error in field.errors %}
-      <p>{{ error }}</p>
-      {% endfor %} {% endfor %}
-    </div>
-    {% endif %}
+  
 
     <form method="POST" class="space-y-5">
       {% csrf_token %}

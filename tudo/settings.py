@@ -1,4 +1,4 @@
- 
+
 
 from pathlib import Path
 import dj_database_url
@@ -6,12 +6,27 @@ import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
- 
+
 # DEBUG = os.environ.get("DEBUG", "False") == "True"
-DEBUG=False
+DEBUG = True
 # cloud secret key
-SECRET_KEY = os.environ.get("SECRET_KEY")
-# SECRET_KEY = 'django-insecure-pintu-taskflow-secret-key-123'
+# SECRET_KEY = os.environ.get("SECRET_KEY")
+
+SECRET_KEY = 'django-insecure-pintu-taskflow-secret-key-123'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
+LOGIN_URL = 'login_view'
+LOGIN_REDIRECT_URL = 'home'
+LOGOUT_REDIRECT_URL = 'login_view'
+
+EMAIL_HOST_USER = 'pintugit982@gmail.com'
+EMAIL_HOST_PASSWORD = 'cvbc gjpr ylxp ylus'
+
 
 ALLOWED_HOSTS = [
     ".onrender.com",
@@ -47,7 +62,7 @@ ROOT_URLCONF = 'tudo.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR  / 'templates'],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -65,21 +80,21 @@ WSGI_APPLICATION = 'tudo.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
-# cloud db setup
-DATABASES = {
-    "default": dj_database_url.parse(
-        os.environ.get("DATABASE_URL")
-    )
-}
-
-
-# testing db 
+# # cloud db setup
 # DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
+#     "default": dj_database_url.parse(
+#         os.environ.get("DATABASE_URL")
+#     )
 # }
+
+
+# testing db
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/6.0/ref/settings/#auth-password-validators

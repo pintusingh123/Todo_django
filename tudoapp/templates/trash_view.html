@@ -1,0 +1,175 @@
+{% extends "base.html" %} 
+{% block title %}Trash{% endblock title %} 
+{% block content %}
+
+<div class="max-w-6xl mx-auto">
+  <!-- Header -->
+  <div
+    class="mb-10 flex flex-col md:flex-row md:items-center md:justify-between gap-4"
+  >
+    <div>
+      <h1 class="text-4xl font-black text-white flex items-center gap-3">
+        🗑 Trash
+      </h1>
+
+      <p class="text-slate-400 mt-2">
+        Deleted tasks are stored for
+        <span class="text-amber-400 font-semibold">15 days</span> before
+        permanent deletion.
+      </p>
+    </div>
+
+    <div
+      class="px-5 py-3 rounded-2xl bg-white/5 border border-white/10 text-slate-300"
+    >
+      {{ tasks|length }} Items
+    </div>
+  </div>
+
+  {% if tasks %}
+
+  <div class="grid gap-6">
+    {% for task in tasks %}
+
+    <div
+      class="rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl shadow-xl p-6"
+    >
+      <div
+        class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6"
+      >
+        <!-- Left -->
+        <div class="flex-1">
+          <h2 class="text-2xl font-bold text-white">{{ task.title }}</h2>
+
+          {% if task.description %}
+          <p class="text-slate-400 mt-2">{{ task.description }}</p>
+          {% endif %}
+
+          <div class="mt-5 flex flex-wrap gap-3">
+            <span
+              class="px-3 py-1 rounded-full bg-red-500/10 border border-red-500/20 text-red-300 text-sm"
+            >
+              Deleted: {{ task.deleted_at|date:"d M Y, h:i A" }}
+            </span>
+
+            <span
+              class="px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-300 text-sm"
+            >
+              {{ task.remaining_days }} Days Left
+            </span>
+          </div>
+        </div>
+
+        <!-- Right Buttons -->
+        <div class="flex flex-col sm:flex-row gap-3">
+          <!-- Restore -->
+          <a
+            href="{% url 'restore_task' task.id %}"
+            onclick="return confirmRestore(event);"
+            class="px-5 py-3 rounded-xl bg-gradient-to-r from-green-500 to-emerald-600 text-white font-semibold hover:scale-105 transition text-center"
+          >
+            ♻ Restore
+          </a>
+
+          <!-- Delete Forever -->
+          <a
+            href="{% url 'delete_forever' task.id %}"
+            onclick="return confirmDelete(event);"
+            class="px-5 py-3 rounded-xl bg-gradient-to-r from-red-600 to-rose-600 text-white font-semibold hover:scale-105 transition text-center"
+          >
+            🗑 Delete Forever
+          </a>
+        </div>
+      </div>
+    </div>
+
+    {% endfor %}
+  </div>
+
+  {% else %}
+
+  <!-- Empty State -->
+  <div
+    class="text-center py-24 border border-dashed border-white/10 rounded-3xl bg-white/5"
+  >
+    <div class="text-7xl mb-4">🗑</div>
+
+    <h2 class="text-3xl font-bold text-white">Trash is Empty</h2>
+
+    <p class="text-slate-400 mt-2">
+      Deleted tasks will appear here for 15 days.
+    </p>
+
+    <a
+      href="{% url 'task_list' %}"
+      class="inline-block mt-6 px-6 py-3 rounded-xl bg-indigo-600 text-white font-semibold hover:scale-105 transition"
+    >
+      Back to Dashboard
+    </a>
+  </div>
+
+  {% endif %}
+</div>
+
+<!-- SweetAlert -->
+{% comment %}
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+{% endcomment %}
+
+<script>
+
+  function confirmRestore(event) {
+      event.preventDefault();
+
+      let url = event.currentTarget.href;
+
+      Swal.fire({
+          title: "Restore Task?",
+          text: "This task will be moved back to your dashboard.",
+          icon: "question",
+          showCancelButton: true,
+          background: "rgba(255,255,255,0.05)",
+   // dark glass bg
+          color: "#fff",
+          backdrop: "rgba(0,0,0,0.6)",
+          customClass: { popup: "rounded-2xl border border-white/10 shadow-2xl backdrop-blur-xl"},
+          confirmButtonColor: "#22c55e",
+          cancelButtonColor: "#6b7280",
+          confirmButtonText: "Yes, Restore"
+      }).then((result) => {
+          if (result.isConfirmed) {
+              window.location.href = url;
+          }
+      });
+
+      return false;
+  }
+
+  function confirmDelete(event) {
+      event.preventDefault();
+
+      let url = event.currentTarget.href;
+
+      Swal.fire({
+          title: "Delete Permanently?",
+          text: "This action cannot be undone!",
+          icon: "warning",
+          showCancelButton: true,
+          background: "rgba(255,255,255,0.05)",
+          color: "#fff",
+          backdrop: "rgba(0,0,0,0.6)",
+          customClass: {popup: "rounded-2xl border border-white/10 shadow-2xl backdrop-blur-xl"},
+          confirmButtonColor: "#ef4444",
+          cancelButtonColor: "#6b7280",
+          confirmButtonText: "Yes, Delete"
+      }).then((result) => {
+          if (result.isConfirmed) {
+              window.location.href = url;
+          }
+      });
+
+      return false;
+  }
+</script>
+
+{% endblock %}

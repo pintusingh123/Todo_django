@@ -1,34 +1,20 @@
-{% extends "base.html" %}
-
-{% block content %}
+{% extends "base.html" %} {% block content %}
 <div class="min-h-auto flex items-center justify-center px-4">
-
-  <div class="w-full max-w-md bg-white/5 border border-white/10 backdrop-blur-xl rounded-2xl shadow-xl p-8">
-
+  <div
+    class="w-full max-w-md bg-white/5 border border-white/10 backdrop-blur-xl rounded-2xl shadow-xl p-8"
+  >
     <!-- Heading -->
     <div class="text-center mb-8">
       <h1 class="text-3xl font-bold text-slate-100">
         Welcome back to TaskFlow
       </h1>
-      <p class="text-slate-300 mt-2">
-        Login to your TaskFlow account
-      </p>
+      <p class="text-slate-300 mt-2">Login to your TaskFlow account</p>
     </div>
 
-    <!-- 🔥 Messages / Errors -->
-    {% if messages %}
-      {% for message in messages %}
-        <div class="mb-4 px-4 py-3 rounded-xl border 
-                    border-red-500/30 bg-red-500/10 
-                    text-red-300 text-sm">
-          {{ message }}
-        </div>
-      {% endfor %}
-    {% endif %}
+     
 
     <!-- Form -->
-    <form method="POST"
-    autocomplete="off"      class="space-y-5">
+    <form method="POST" autocomplete="off" class="space-y-5">
       {% csrf_token %}
 
       <!-- Username -->
@@ -45,6 +31,15 @@
           Password
         </label>
         {{ form.password }}
+      </div>
+      <!-- Forgot Password -->
+      <div class="flex justify-end mt-1">
+        <a
+          href="{% url 'forgot_password' %}"
+          class="text-sm text-indigo-400 hover:underline"
+        >
+          Forgot Password?
+        </a>
       </div>
 
       <!-- Button -->
@@ -68,7 +63,6 @@
         </a>
       </p>
     </div>
-
   </div>
 </div>
 {% endblock %}
